@@ -24,7 +24,7 @@ echo -e "${green} Running TPCx-IoT Benchmark Suite - Run $i - Epoch $start ${NC}
 echo -e "${green} TPCx-IoT Version ${version} ${NC}" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 echo -e "${green}$sep${NC}" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 echo "" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
-echo -e "${green}Starting IoT Run $i output being return to $PWD/logs/IoT-run-time-$LOGFILE_NAME$i.txt ${NC}" | tee -a ./TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
+echo -e "${green}Starting IoT Run $i output being return to $PWD/logs/IoT-run-time-$LOGFILE_NAME$i.txt ${NC}" | tee -a $PWD/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 echo "" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 
 # Command for running workload IoT based on the YCSB params

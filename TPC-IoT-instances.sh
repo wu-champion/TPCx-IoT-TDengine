@@ -26,7 +26,7 @@ do
 
 echo $counter
 
-cat << EOF | tee ./tpc_iot_instance${counter}_workload
+cat << EOF | tee $PWD/tpc_iot_instance${counter}_workload
 insertstart=$start
 insertcount=$operationCount
 recordcount=$recordCount
