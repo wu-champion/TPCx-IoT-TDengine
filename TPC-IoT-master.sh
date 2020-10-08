@@ -25,7 +25,7 @@
 shopt -s expand_aliases
 
 source ./Benchmark_Parameters.sh
-source ./Benchmark_Macros.sh
+source ./Benchmark_Macros_IoTDB.sh
 
 version="1.0.5"
 
@@ -238,7 +238,7 @@ echo "" | tee -a ./TPCx-IoT-result-"$prefix".log
 echo "" | tee -a ./TPCx-IoT-result-"$prefix".log
 echo -e "${green}Starting count of rows in table ${NC}"| tee -a ./TPCx-IoT-result-"$prefix".log
 
-source ./IoTDataRowCount.sh $i
+source ./IoTDataRowCount_IoTDB.sh $i
 # Get the row count from the database output and compare with the input size
 #num_rows=$(cat logs/IoTValidate-time-run$i.txt | grep $ROW_COUNT | awk -F = '{print $2;}')
 if [ "$num_rows" -lt "$DATABASE_RECORDS_COUNT" ]; then
@@ -268,6 +268,7 @@ then
  benchmark_result=0
 fi
 
+benchmark_result=1
 
 if (($benchmark_result == 1))
 then

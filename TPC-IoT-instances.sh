@@ -45,7 +45,7 @@ EOF
 #nohup ./tpcx-iot/bin/tpcx-iot load basic -P ./tpc_iot_instance${counter}_workload -s > /dev/null &
 
 echo "./tpcx-iot/bin/tpcx-iot run $DATABASE_CLIENT -P ./tpc_iot_instance${counter}_workload -p $SUT_PARAMETERS -p client=$clientID${counter} -p runtype=$RUN_TYPE -s > $PWD/logs/db$RUN_TYPE$counter.dat &"
-nohup $PWD/tpcx-iot/bin/tpcx-iot run $DATABASE_CLIENT -P ./tpc_iot_instance${counter}_workload -p $SUT_PARAMETERS -p client=$clientID${counter} -p runtype=$RUN_TYPE -s > $PWD/logs/db$RUN_TYPE$counter.dat &
+nohup $PWD/tpcx-iot/bin/tpcx-iot run $DATABASE_CLIENT -P $PWD/tpc_iot_instance${counter}_workload -p $SUT_PARAMETERS -p client=$clientID${counter} -p runtype=$RUN_TYPE -s > $PWD/logs/db$RUN_TYPE$counter.dat &
 #nohup $PWD/tpcx-iot/bin/tpcx-iot run $DATABASE_CLIENT -P ./tpc_iot_instance${counter}_workload -p columnfamily=cf -s > $PWD/logs/db$counter.dat &
 pids="$pids $!"
 
