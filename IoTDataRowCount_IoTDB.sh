@@ -21,6 +21,5 @@ source ./Benchmark_Macros_IoTDB.sh
 #
 #
 
-line=$(eval "$COUNT_ROWS_IN_TABLE | head -n 4 | tail -n 1 | awk '{print \$2}'")
-num_rows=echo $line | tr -cd 0-9
+num_rows=$(eval "$COUNT_ROWS_IN_TABLE" | head -n 5 | tail -n 1 | awk '{print $2}' | awk '{sub(/.$/,"")}1')
 `export num_rows=$num_rows`

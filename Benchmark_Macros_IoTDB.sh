@@ -6,23 +6,19 @@ DB_PORT="6667"
 
 CLI_PATH="/data/tpc/iotdb-cli-0.11.0-SNAPSHOT"
 
-IOT_DATA_TABLE=usertable
+CLI_SHELL="xargs -i sh $CLI_PATH/sbin/start-cli.sh -h $DB_HOST -p $DB_PORT -u root -pw root -e '{}'"
 
-CHECK_IF_TABLE_EXISTS="Table $IOT_DATA_TABLE doesnot exist"
+CHECK_IF_TABLE_EXISTS="Table IoTDB does exist"
 
-TRUNCATE_TABLE="cat iotdb_scripts/delete.sql | xargs -i sh $CLI_PATH/sbin/start-cli.sh -h $DB_HOST -p $DB_PORT -u root -pw root -e '{}'"
+TRUNCATE_TABLE="echo 'delete storage group root.*' |  $CLI_SHELL"
 
-CREATE_TABLE="cat iotdb_scripts/create.sql | xargs -i sh $CLI_PATH/sbin/start-cli.sh -h $DB_HOST -p $DB_PORT -u root -pw root -e '{}'"
+CREATE_TABLE="echo 'There is no need to create table in IoTDB'"
 
-CHECK_STATS_DB="status 'simple'"
+CHECK_STATS_DB=""
 
-#COUNT_ROWS_IN_TABLE="count 'usertable', INTERVAL=>1000000"
-
-COUNT_ROWS_IN_TABLE="sh $CLI_PATH/sbin/start-cli.sh -h $DB_HOST -p $DB_PORT -u root -pw root -e 'select count(*) from root group by level=0'"
+COUNT_ROWS_IN_TABLE="echo 'flush;select count(*) from root group by level=0' | $CLI_SHELL"
 
 SUT_TABLE_PATH="/hbase/data/default/usertable/*/.regioninfo"
-
-ROW_COUNT="ROWS="
 
 SUT_SHELL="cat"
 

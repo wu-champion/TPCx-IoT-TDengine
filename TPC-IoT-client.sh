@@ -57,7 +57,7 @@ cat $PWD/logs/IoT-Workload-run-time-$LOGFILE_NAME$i-$clientId.txt >> $PWD/logs/T
 echo "" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 echo "" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 echo -e "${green}======== Workload IoT Run Result SUCCESS ========${NC}" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
-echo -e "${green}======== Time taken by Workload IoT = `grep real $PWD/logs/IoT-Workload-run-time-$LOGFILE_NAME$i.txt | awk '{print $2}'`====${NC}" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
+echo -e "${green}======== Time taken by Workload IoT = `grep real $PWD/logs/IoT-Workload-run-time-$LOGFILE_NAME$i-$clientId.txt | awk '{print $2}'`====${NC}" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 echo "" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 echo "" | tee -a $PWD/logs/TPCx-IoT-result-"$prefix"-"$clientId-$LOGFILE_NAME$i".log
 end=`date +%s%3N`
