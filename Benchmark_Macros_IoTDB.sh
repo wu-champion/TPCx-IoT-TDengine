@@ -12,7 +12,7 @@ CHECK_IF_TABLE_EXISTS="Table IoTDB does exist"
 
 TRUNCATE_TABLE="echo 'delete storage group root.*' |  $CLI_SHELL"
 
-CREATE_TABLE="echo 'There is no need to create table in IoTDB'"
+CREATE_TABLE="There is no need to create table in IoTDB"
 
 CHECK_STATS_DB=""
 
