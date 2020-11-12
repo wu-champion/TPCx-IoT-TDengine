@@ -1,8 +1,8 @@
-DB_HOST="192.168.10.68"
+DB_HOST="127.0.0.1"
 
 DB_PORT="6667"
 
-CLI_PATH="/data/tpc/iotdb-cli-0.11.0-SNAPSHOT"
+CLI_PATH="/home/ubuntu/iotdb-cli-0.11.0-SNAPSHOT"
 
 CLI_SHELL="xargs -i sh $CLI_PATH/sbin/start-cli.sh -h $DB_HOST -p $DB_PORT -u root -pw root -e '{}'"
 
