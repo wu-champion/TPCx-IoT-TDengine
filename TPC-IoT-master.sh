@@ -281,7 +281,7 @@ perf_metric=$(echo "scale=4;$scale_factor/$total_time_in_seconds" | bc)
 echo -e "${green}$sep============${NC}" | tee -a ./TPCx-IoT-result-"$prefix".log
 echo "" | tee -a ./TPCx-IoT-result-"$prefix".log
 echo -e "${green}md5sum of core components:${NC}" | tee -a ./TPCx-IoT-result-"$prefix".log
-md5sum ./TPC-IoT-master.sh ./tpcx-iot/iotdb-binding/lib/core-0.13.0-SNAPSHOT.jar ./IoT_cluster_validate_suite.sh | tee -a $PWD/TPCx-IoT-result-"$prefix".log
+md5sum ./TPC-IoT-master.sh ./tpcx-iot/lib/core-0.13.0-SNAPSHOT.jar ./IoT_cluster_validate_suite.sh | tee -a $PWD/TPCx-IoT-result-"$prefix".log
 echo "" | tee -a ./TPCx-IoT-result-"$prefix".log
 
 echo -e "${green}$sep============${NC}" | tee -a ./TPCx-IoT-result-"$prefix".log
