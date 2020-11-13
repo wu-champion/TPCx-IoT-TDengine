@@ -1,6 +1,6 @@
 // create instances
 aws ec2 run-instances \
---image-id ami-0c32401bd37a3a5e5 \
+--image-id ami-02bb771d7f3b6c4b6 \
 --instance-type t2.micro \
 --count 1 \
 --key-name txy \
@@ -10,7 +10,7 @@ aws ec2 run-instances \
 --network-interfaces 'AssociatePublicIpAddress=true,DeviceIndex=0'
 
 
-// get all ips
+// get all public ips
 export ips=`aws ec2 describe-instances --filters "Name=tag:tpc,Values=tpc" --query "Reservations[].Instances[].NetworkInterfaces[].Association[].PublicIp"`
 echo $ips
 
