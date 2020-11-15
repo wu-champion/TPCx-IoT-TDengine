@@ -15,7 +15,7 @@ SUT_PARAMETERS=$9
 WORKLOAD=${10}
 LOGFILE_NAME=${11}
 
-mkdir -p ./logs
+mkdir -p $PWD/logs
 start=`date +%s%3N`
 
 
