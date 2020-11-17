@@ -1,1 +1,3 @@
 tpc1
+tpc2
+tpc3
