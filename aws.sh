@@ -1,7 +1,7 @@
 : << !
 # create instances
 aws ec2 run-instances \
---image-id ami-0217058119427ee47 \
+--image-id ami-0dce316724cf8066a \
 --instance-type t2.micro \
 --count 1 \
 --key-name txy \
@@ -26,39 +26,37 @@ aws ec2 terminate-instances --instance-ids $instanceIds
 !
 
 # server info
-serverPublicIP=18.191.193.128
-serverPrivateIP=172.31.46.211
+serverPublicIP=18.217.97.57
+serverPrivateIP=172.31.39.11
 # client info
-tpc1PublicIP=18.216.111.124
-
-# tpc1PublicIP=
-# tpc2PublicIP=
-# tpc3PublicIP=
-# tpc2PrivateIP=
-# tpc3PrivateIP=
+tpc1PublicIP=52.14.11.65
+tpc2PublicIP=18.216.139.51
+tpc3PublicIP=18.218.95.127
+tpc2PrivateIP=172.31.37.21
+tpc3PrivateIP=172.31.33.212
 
 # init server
 
 ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme1n1"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme2n1"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme3n1"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme4n1"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme2n1"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme3n1"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme4n1"
 ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme1n1 /home/ubuntu/data/data1"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme2n1 /home/ubuntu/data/data2"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme3n1 /home/ubuntu/data/data3"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme4n1 /home/ubuntu/data/data4"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme2n1 /home/ubuntu/data/data2"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme3n1 /home/ubuntu/data/data3"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme4n1 /home/ubuntu/data/data4"
 ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo chmod 777 /home/ubuntu/data/data1"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo chmod 777 /home/ubuntu/data/data2"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo chmod 777 /home/ubuntu/data/data3"
-ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo chmod 777 /home/ubuntu/data/data4"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo chmod 777 /home/ubuntu/data/data2"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo chmod 777 /home/ubuntu/data/data3"
+# ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo chmod 777 /home/ubuntu/data/data4"
 # sudo fdisk -l
 # sudo df -h
 # vim /etc/profile and ~/.bashrc change jdk from 8 to 11
 
 #init tpc1
-ssh -i ~/Desktop/txy.pem ubuntu@$tpc1PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$serverPrivateIP server1' >> /etc/hosts"
-# ssh -i ~/Desktop/txy.pem ubuntu@$tpc1PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$serverPrivateIP server1' >> /etc/hosts && sudo echo '$tpc2PrivateIP tpc2' >> /etc/hosts && sudo echo '$tpc3PrivateIP tpc3' >> /etc/hosts"
+# ssh -i ~/Desktop/txy.pem ubuntu@$tpc1PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$serverPrivateIP server1' >> /etc/hosts"
+ssh -i ~/Desktop/txy.pem ubuntu@$tpc1PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$serverPrivateIP server1' >> /etc/hosts && sudo echo '$tpc2PrivateIP tpc2' >> /etc/hosts && sudo echo '$tpc3PrivateIP tpc3' >> /etc/hosts"
 
 #init tpc2 and tpc3
-# ssh -i ~/Desktop/txy.pem ubuntu@$tpc2PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$serverPrivateIP server1' >> /etc/hosts"
-# ssh -i ~/Desktop/txy.pem ubuntu@$tpc3PublicIP "sudo chmod 777 /etc/hosts && echo '$serverPrivateIP server1' >> /etc/hosts"
+ssh -i ~/Desktop/txy.pem ubuntu@$tpc2PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$serverPrivateIP server1' >> /etc/hosts"
+ssh -i ~/Desktop/txy.pem ubuntu@$tpc3PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$serverPrivateIP server1' >> /etc/hosts"
