@@ -1,7 +1,7 @@
 : << !
 # create instances
 aws ec2 run-instances \
---image-id ami-09a7c634fff4d295c \
+--image-id ami-0ddeeb0bdb5987751 \
 --instance-type t2.micro \
 --count 1 \
 --key-name txy \
@@ -28,24 +28,24 @@ aws ec2 terminate-instances --instance-ids $instanceIds
 !
 
 # server info
-server1PublicIP=3.22.236.147
-server1PrivateIP=172.31.39.201
-# server2PublicIP=3.139.90.103
-# server2PrivateIP=172.31.46.246
+server1PublicIP=18.191.183.228
+server1PrivateIP=172.31.39.1
+server2PublicIP=3.137.208.20
+server2PrivateIP=172.31.33.70
 # client info
-tpc1PublicIP=18.217.113.59
-tpc2PublicIP=3.19.141.242
-tpc3PublicIP=18.191.241.232
-tpc2PrivateIP=172.31.45.51
-tpc3PrivateIP=172.31.46.132
+tpc1PublicIP=3.17.204.232
+# tpc2PublicIP=
+# tpc3PublicIP=
+# tpc2PrivateIP=
+# tpc3PrivateIP=
 
 # init server
 
-ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo mkfs -t ext4 /dev/nvme1n1"
+ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo mkfs -t xfs /dev/nvme1n1"
 # ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme2n1"
 # ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme3n1"
 # ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mkfs -t ext4 /dev/nvme4n1"
-ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo mount -t ext4 /dev/nvme1n1 /home/ubuntu/data/data1"
+ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo mount -t xfs /dev/nvme1n1 /home/ubuntu/data/data1"
 # ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme2n1 /home/ubuntu/data/data2"
 # ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme3n1 /home/ubuntu/data/data3"
 # ssh -i ~/Desktop/txy.pem ubuntu@$serverPublicIP "sudo mount -t ext4 /dev/nvme4n1 /home/ubuntu/data/data4"
@@ -56,13 +56,13 @@ ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo chmod 777 /home/ubuntu/da
 # sudo fdisk -l
 # sudo df -h
 # vim /etc/profile and ~/.bashrc change jdk from 8 to 11
-# ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo mkfs -t ext4 /dev/nvme1n1"
-# ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo mount -t ext4 /dev/nvme1n1 /home/ubuntu/data/data1"
-# ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo chmod 777 /home/ubuntu/data/data1"
+ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo mkfs -t xfs /dev/nvme1n1"
+ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo mount -t xfs /dev/nvme1n1 /home/ubuntu/data/data1"
+ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo chmod 777 /home/ubuntu/data/data1"
 
 
-# ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server1PrivateIP server1' >> /etc/hosts && sudo echo '$server2PrivateIP server2' >> /etc/hosts"
-# ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server2PrivateIP server1' >> /etc/hosts && sudo echo '$server1PrivateIP server2' >> /etc/hosts"
+ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server1PrivateIP server1' >> /etc/hosts && sudo echo '$server2PrivateIP server2' >> /etc/hosts"
+ssh -i ~/Desktop/txy.pem ubuntu@$server2PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server2PrivateIP server1' >> /etc/hosts && sudo echo '$server1PrivateIP server2' >> /etc/hosts"
 
 
 #init tpc1
@@ -70,185 +70,182 @@ ssh -i ~/Desktop/txy.pem ubuntu@$server1PublicIP "sudo chmod 777 /home/ubuntu/da
 ssh -i ~/Desktop/txy.pem ubuntu@$tpc1PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server1PrivateIP server1' >> /etc/hosts && sudo echo '$tpc2PrivateIP tpc2' >> /etc/hosts && sudo echo '$tpc3PrivateIP tpc3' >> /etc/hosts"
 
 #init tpc2 and tpc3
-ssh -i ~/Desktop/txy.pem ubuntu@$tpc2PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server1PrivateIP server1' >> /etc/hosts"
-ssh -i ~/Desktop/txy.pem ubuntu@$tpc3PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server1PrivateIP server1' >> /etc/hosts"
+# ssh -i ~/Desktop/txy.pem ubuntu@$tpc2PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server1PrivateIP server1' >> /etc/hosts"
+# ssh -i ~/Desktop/txy.pem ubuntu@$tpc3PublicIP "sudo chmod 777 /etc/hosts && sudo echo '$server1PrivateIP server1' >> /etc/hosts"
 
 
-6G 
-===============================================
-TPCx-IoT Performance Metric (IoTps) Report
+# 600G
 
-Test Run 1 details : Total Time For Warmup Run In Seconds = 21.231
-Test Run 1 details : Total Time In Seconds = 21.510
-                      Total Number of Records = 3000000
-DB_HOST="server1"
+# ===============================================
+# TPCx-IoT Performance Metric (IoTps) Report
 
-TPCx-IoT Performance Metric (IoTps): 139470.0139
+# Test Run 1 details : Total Time For Warmup Run In Seconds = 225.401
+# Test Run 1 details : Total Time In Seconds = 207.147
+#                       Total Number of Records = 300000000
 
-===============================================
+# TPCx-IoT Performance Metric (IoTps): 1448246.8971
 
-===============================================
-TPCx-IoT Performance Metric (IoTps) Report
+# ===============================================
 
-Test Run 1 details : Total Time For Warmup Run In Seconds = 25.256
-Test Run 1 details : Total Time In Seconds = 25.614
-                      Total Number of Records = 3000000
+# ===============================================
+# TPCx-IoT Performance Metric (IoTps) Report
 
-TPCx-IoT Performance Metric (IoTps): 117123.4481
+# Test Run 1 details : Total Time For Warmup Run In Seconds = 308.716
+# Test Run 1 details : Total Time In Seconds = 273.599
+#                       Total Number of Records = 300000000
 
-===============================================
-
-20G
-
-===============================================
-TPCx-IoT Performance Metric (IoTps) Report
-
-Test Run 1 details : Total Time For Warmup Run In Seconds = 53.549
-Test Run 1 details : Total Time In Seconds = 60.004
-                      Total Number of Records = 10000000
-
-TPCx-IoT Performance Metric (IoTps): 166655.5562
-
-===============================================
-
-===============================================
-TPCx-IoT Performance Metric (IoTps) Report
-
-Test Run 1 details : Total Time For Warmup Run In Seconds = 61.089
-Test Run 1 details : Total Time In Seconds = 59.107
-                      Total Number of Records = 10000000
-
-TPCx-IoT Performance Metric (IoTps): 169184.6989
-
-===============================================
-
-
-600G
-
-===============================================
-TPCx-IoT Performance Metric (IoTps) Report
-
-Test Run 1 details : Total Time For Warmup Run In Seconds = 225.401
-Test Run 1 details : Total Time In Seconds = 207.147
-                      Total Number of Records = 300000000
-
-TPCx-IoT Performance Metric (IoTps): 1448246.8971
-
-===============================================
-
-===============================================
-TPCx-IoT Performance Metric (IoTps) Report
-
-Test Run 1 details : Total Time For Warmup Run In Seconds = 308.716
-Test Run 1 details : Total Time In Seconds = 273.599
-                      Total Number of Records = 300000000
-
-TPCx-IoT Performance Metric (IoTps): 1096495.2357
+# TPCx-IoT Performance Metric (IoTps): 1096495.2357
 
 
 
- Raft member(sender) - compete for log manager before commit: 43760840.19, 7626739, 5.74
-         Raft member(sender) - commit log in log manager: 236865.61, 7626739, 0.03
-           Raft member(sender) - get logs to be committed: 5540.49, 6368968, 0.00
-           Raft member(sender) - delete logs exceeding capacity: 115.25, 761, 0.15
-           Raft member(sender) - append and stable committed logs: 6295.56, 6368969, 0.00
-           Raft member(sender) - apply after committing logs: 201864.49, 6368969, 0.03
-             Raft member(sender) - provide log to consumer: 191700.71, 7626716, 0.03
-             Raft member(sender) - apply logs that cannot run in parallel: 0.00, 0, NaN
-         Raft member(sender) - wait until log is applied: 4677366.20, 7626742, 0.61
-           Raft member(sender) - in apply queue: 3944666.84, 7626716, 0.52
-           Raft member(sender) - apply data log: 1207017.88, 7626715, 0.16
-       Raft member(sender) - log from create to accept: 133048.03, 7626796, 0.02
-    Data group member - wait for leader: 0.00, 0, NaN
-    Data group member - forward to leader: 0.00, 0, NaN
-    Log dispatcher - in queue: 0.00, 0, NaN
-    Log dispatcher - from create to end: 0.00, 0, NaN
-  Meta group member - execute in remote group: 0.00, 0, NaN
- Raft member(receiver) - index diff: 0.00, 0, NaN
+#  Raft member(sender) - compete for log manager before commit: 43760840.19, 7626739, 5.74
+#          Raft member(sender) - commit log in log manager: 236865.61, 7626739, 0.03
+#            Raft member(sender) - get logs to be committed: 5540.49, 6368968, 0.00
+#            Raft member(sender) - delete logs exceeding capacity: 115.25, 761, 0.15
+#            Raft member(sender) - append and stable committed logs: 6295.56, 6368969, 0.00
+#            Raft member(sender) - apply after committing logs: 201864.49, 6368969, 0.03
+#              Raft member(sender) - provide log to consumer: 191700.71, 7626716, 0.03
+#              Raft member(sender) - apply logs that cannot run in parallel: 0.00, 0, NaN
+#          Raft member(sender) - wait until log is applied: 4677366.20, 7626742, 0.61
+#            Raft member(sender) - in apply queue: 3944666.84, 7626716, 0.52
+#            Raft member(sender) - apply data log: 1207017.88, 7626715, 0.16
+#        Raft member(sender) - log from create to accept: 133048.03, 7626796, 0.02
+#     Data group member - wait for leader: 0.00, 0, NaN
+#     Data group member - forward to leader: 0.00, 0, NaN
+#     Log dispatcher - in queue: 0.00, 0, NaN
+#     Log dispatcher - from create to end: 0.00, 0, NaN
+#   Meta group member - execute in remote group: 0.00, 0, NaN
+#  Raft member(receiver) - index diff: 0.00, 0, NaN
 
 
+# ===============================================
+# TPCx-IoT Performance Metric (IoTps) Report
+
+# Test Run 1 details : Total Time For Warmup Run In Seconds = 318.585
+# Test Run 1 details : Total Time In Seconds = 272.661
+#                       Total Number of Records = 300000000
+
+# TPCx-IoT Performance Metric (IoTps): 1100267.3649
+
+# ===============================================
+
+#   Meta group member - execute in local group: 84559242.10, 20030128, 4.22
+#     Data group member - execute locally: 84536814.47, 20030128, 4.22
+#        Raft member(sender) - compete for log manager before append: 52835595.82, 20030148, 2.64
+#        Raft member(sender) - locally append log: 25630.28, 20030148, 0.00
+#        Raft member(sender) - build SendLogRequest: 27023.41, 20030148, 0.00
+#          Raft member(sender) - build AppendEntryRequest: 18420.37, 20030148, 0.00
+#        Raft member(sender) - offer log to dispatcher: 131040.48, 20030148, 0.01
+#          Raft member(sender) - sender wait for prev log: 0.00, 0, NaN
+#          Raft member(sender) - serialize logs: 0.00, 0, NaN
+#          Raft member(sender) - send log: 0.00, 0, NaN
+#          Raft member(receiver) - log parse: 0.00, 0, NaN
+#          Raft member(receiver) - receiver wait for prev log: 0.00, 0, NaN
+#          Raft member(receiver) - append entrys: 0.00, 0, NaN
+#        Raft member(sender) - wait for votes: 2991.80, 20030148, 0.00
+#        Raft member(sender) - locally commit log(using dispatcher): 31403843.65, 20024787, 1.57
+#          Raft member(sender) - compete for log manager before commit: 30203369.65, 20030148, 1.51
+#          Raft member(sender) - commit log in log manager: 231447.63, 20030148, 0.01
+#            Raft member(sender) - get logs to be committed: 11258.48, 17422684, 0.00
+#            Raft member(sender) - delete logs exceeding capacity: 142.95, 2002, 0.07
+#            Raft member(sender) - append and stable committed logs: 13046.12, 17422684, 0.00
+#            Raft member(sender) - apply after committing logs: 155368.90, 17422684, 0.01
+#              Raft member(sender) - provide log to consumer: 135179.80, 20030128, 0.01
+#              Raft member(sender) - apply logs that cannot run in parallel: 0.00, 0, NaN
+#          Raft member(sender) - wait until log is applied: 979851.88, 20030148, 0.05
+#            Raft member(sender) - put into apply queue for each log: 116498.75, 20030128, 0.01
+#            Raft member(sender) - take from apply queue for each log: 11334749.92, 20030128, 0.57
+#            Raft member(sender) - in apply queue: 531902.81, 20030128, 0.03
+#            Raft member(sender) - apply data log: 516755.29, 20030128, 0.03
+#        Raft member(sender) - log from create to accept: 171948.52, 20030148, 0.01
+#     Data group member - wait for leader: 0.00, 0, NaN
+#     Data group member - forward to leader: 0.00, 0, NaN
+#     Log dispatcher - in queue: 0.00, 0, NaN
+#     Log dispatcher - from create to end: 0.00, 0, NaN
+#   Meta group member - execute in remote group: 0.00, 0, NaN
+#  Raft member(receiver) - index diff: 0.00, 0, NaN
+# }
+
+# Test Run 1 details : Total Time For Warmup Run In Seconds = 554.183
+# Test Run 1 details : Total Time In Seconds = 530.346
+#                       Total Number of Records = 30000000
+
+# TPCx-IoT Performance Metric (IoTps): 56566.8450
+
+# ===============================================
+
+#   Meta group member - execute in local group: 196760.86, 1997438, 0.10
+#     Data group member - execute locally: 195476.19, 1997438, 0.10
+#        Raft member(sender) - compete for log manager before append: 3353.47, 1997440, 0.00
+#        Raft member(sender) - locally append log: 24153.29, 1997440, 0.01
+#        Raft member(sender) - build SendLogRequest: 2341.55, 1997440, 0.00
+#          Raft member(sender) - build AppendEntryRequest: 1428.71, 1997440, 0.00
+#        Raft member(sender) - offer log to dispatcher: 19303.03, 1997440, 0.01
+#          Raft member(sender) - sender wait for prev log: 0.00, 0, NaN
+#          Raft member(sender) - serialize logs: 0.00, 0, NaN
+#          Raft member(sender) - send log: 0.00, 0, NaN
+#          Raft member(receiver) - log parse: 0.00, 0, NaN
+#          Raft member(receiver) - receiver wait for prev log: 0.00, 0, NaN
+#          Raft member(receiver) - append entrys: 0.00, 0, NaN
+#        Raft member(sender) - wait for votes: 313.62, 1997440, 0.00
+#        Raft member(sender) - locally commit log(using dispatcher): 142679.18, 1997122, 0.07
+#          Raft member(sender) - compete for log manager before commit: 901.45, 1997440, 0.00
+#          Raft member(sender) - commit log in log manager: 28716.65, 1997440, 0.01
+#            Raft member(sender) - get logs to be committed: 1134.55, 1997281, 0.00
+#            Raft member(sender) - delete logs exceeding capacity: 29.83, 198, 0.15
+#            Raft member(sender) - append and stable committed logs: 1448.18, 1997281, 0.00
+#            Raft member(sender) - apply after committing logs: 24405.28, 1997281, 0.01
+#              Raft member(sender) - provide log to consumer: 22539.37, 1997438, 0.01
+#              Raft member(sender) - apply logs that cannot run in parallel: 0.00, 0, NaN
+#          Raft member(sender) - wait until log is applied: 112148.26, 1997440, 0.06
+#            Raft member(sender) - put into apply queue for each log: 20562.47, 1997438, 0.01
+#            Raft member(sender) - take from apply queue for each log: 2101147.41, 1997438, 1.05
+#            Raft member(sender) - in apply queue: 47352.18, 1997438, 0.02
+#            Raft member(sender) - apply data log: 59835.00, 1997438, 0.03
+#        Raft member(sender) - log from create to accept: 20123.78, 1997440, 0.01
+#     Data group member - wait for leader: 0.00, 0, NaN
+#     Data group member - forward to leader: 0.00, 0, NaN
+#     Log dispatcher - in queue: 0.00, 0, NaN
+#     Log dispatcher - from create to end: 0.00, 0, NaN
+#   Meta group member - execute in remote group: 0.00, 0, NaN
+#  Raft member(receiver) - index diff: 0.00, 0, NaN
+# }
+
+#   Meta group member - execute in local group: 50706.48, 659358, 0.08
+#     Data group member - execute locally: 50353.64, 659358, 0.08
+#        Raft member(sender) - compete for log manager before append: 982.12, 659360, 0.00
+#        Raft member(sender) - locally append log: 8722.18, 659360, 0.01
+#        Raft member(sender) - build SendLogRequest: 781.32, 659360, 0.00
+#          Raft member(sender) - build AppendEntryRequest: 484.29, 659360, 0.00
+#        Raft member(sender) - offer log to dispatcher: 6815.02, 659360, 0.01
+#          Raft member(sender) - sender wait for prev log: 0.00, 0, NaN
+#          Raft member(sender) - serialize logs: 0.00, 0, NaN
+#          Raft member(sender) - send log: 0.00, 0, NaN
+#          Raft member(receiver) - log parse: 0.00, 0, NaN
+#          Raft member(receiver) - receiver wait for prev log: 0.00, 0, NaN
+#          Raft member(receiver) - append entrys: 0.00, 0, NaN
+#        Raft member(sender) - wait for votes: 106.87, 659360, 0.00
+#        Raft member(sender) - locally commit log(using dispatcher): 31813.19, 659042, 0.05
+#          Raft member(sender) - compete for log manager before commit: 238.27, 659360, 0.00
+#          Raft member(sender) - commit log in log manager: 6581.58, 659360, 0.01
+#            Raft member(sender) - get logs to be committed: 433.15, 659285, 0.00
+#            Raft member(sender) - delete logs exceeding capacity: 7.17, 64, 0.11
+#            Raft member(sender) - append and stable committed logs: 475.15, 659285, 0.00
+#            Raft member(sender) - apply after committing logs: 5143.75, 659285, 0.01
+#              Raft member(sender) - provide log to consumer: 4573.27, 659358, 0.01
+#              Raft member(sender) - apply logs that cannot run in parallel: 0.00, 0, NaN
+#          Raft member(sender) - wait until log is applied: 24753.79, 659360, 0.04
+#            Raft member(sender) - put into apply queue for each log: 3764.57, 659358, 0.01
+#            Raft member(sender) - take from apply queue for each log: 710344.19, 659358, 1.08
+#            Raft member(sender) - in apply queue: 5760.64, 659358, 0.01
+#            Raft member(sender) - apply data log: 14264.55, 659358, 0.02
+#        Raft member(sender) - log from create to accept: 7079.89, 659360, 0.01
+#     Data group member - wait for leader: 0.00, 0, NaN
+#     Data group member - forward to leader: 0.00, 0, NaN
+#     Log dispatcher - in queue: 0.00, 0, NaN
+#     Log dispatcher - from create to end: 0.00, 0, NaN
+#   Meta group member - execute in remote group: 0.00, 0, NaN
+#  Raft member(receiver) - index diff: 0.00, 0, NaN
+# }
 
 
-
- 111
- ===============================================
-TPCx-IoT Performance Metric (IoTps) Report
-
-Test Run 1 details : Total Time For Warmup Run In Seconds = 26.115
-Test Run 1 details : Total Time In Seconds = 33.594
-                      Total Number of Records = 3000000
-
-TPCx-IoT Performance Metric (IoTps): 89301.6610
-
-===============================================
- timer: Meta group member - execute non query: 1439693.01, 231754, 6.21
-  Meta group member - execute in local group: 1295069.92, 236214, 5.48
-    Data group member - execute locally: 1294867.22, 236214, 5.48
-       Raft member(sender) - compete for log manager before append: 259226.36, 236222, 1.10
-       Raft member(sender) - locally append log: 199.49, 236222, 0.00
-       Raft member(sender) - build SendLogRequest: 3138.47, 236222, 0.01
-         Raft member(sender) - build AppendEntryRequest: 1847.74, 236222, 0.01
-       Raft member(sender) - offer log to dispatcher: 3696.01, 236222, 0.02
-         Raft member(sender) - sender wait for prev log: 0.00, 0, NaN
-         Raft member(sender) - serialize logs: 0.00, 0, NaN
-         Raft member(sender) - send log: 0.00, 0, NaN
-         Raft member(receiver) - log parse: 0.00, 0, NaN
-         Raft member(receiver) - receiver wait for prev log: 0.00, 0, NaN
-         Raft member(receiver) - append entrys: 0.00, 0, NaN
-       Raft member(sender) - wait for votes: 26.62, 236222, 0.00
-       Raft member(sender) - locally commit log(using dispatcher): 975457.27, 232720, 4.19
-         Raft member(sender) - compete for log manager before commit: 35480.27, 236222, 0.15
-         Raft member(sender) - commit log in log manager: 9043.14, 236222, 0.04
-           Raft member(sender) - get logs to be committed: 1568.73, 232773, 0.01
-           Raft member(sender) - delete logs exceeding capacity: 404.48, 249, 1.62
-           Raft member(sender) - append and stable committed logs: 1251.46, 232773, 0.01
-           Raft member(sender) - apply after committing logs: 5009.09, 232773, 0.02
-             Raft member(sender) - provide log to consumer: 3523.97, 236214, 0.01
-             Raft member(sender) - apply logs that cannot run in parallel: 0.00, 0, NaN
-         Raft member(sender) - wait until log is applied: 977467.57, 236222, 4.14
-           Raft member(sender) - in apply queue: 770526.28, 236214, 3.26
-           Raft member(sender) - apply data log: 148966.45, 236214, 0.63
-       Raft member(sender) - log from create to accept: 4089.61, 236222, 0.02
-    Data group member - wait for leader: 0.00, 0, NaN
-    Data group member - forward to leader: 0.00, 0, NaN
-    Log dispatcher - in queue: 0.00, 0, NaN
-    Log dispatcher - from create to end: 0.00, 0, NaN
-  Meta group member - execute in remote group: 0.00, 0, NaN
- Raft member(receiver) - index diff: 0.00, 0, NaN
-}
-
-  Meta group member - execute in local group: 1300330.93, 237694, 5.47
-    Data group member - execute locally: 1299999.98, 237694, 5.47
-       Raft member(sender) - compete for log manager before append: 318709.61, 237702, 1.34
-       Raft member(sender) - locally append log: 297.23, 237702, 0.00
-       Raft member(sender) - build SendLogRequest: 1699.49, 237702, 0.01
-         Raft member(sender) - build AppendEntryRequest: 1385.45, 237702, 0.01
-       Raft member(sender) - offer log to dispatcher: 3067.55, 237702, 0.01
-         Raft member(sender) - sender wait for prev log: 0.00, 0, NaN
-         Raft member(sender) - serialize logs: 0.00, 0, NaN
-         Raft member(sender) - send log: 0.00, 0, NaN
-         Raft member(receiver) - log parse: 0.00, 0, NaN
-         Raft member(receiver) - receiver wait for prev log: 0.00, 0, NaN
-         Raft member(receiver) - append entrys: 0.00, 0, NaN
-       Raft member(sender) - wait for votes: 30.41, 237702, 0.00
-       Raft member(sender) - locally commit log(using dispatcher): 922628.63, 233059, 3.96
-         Raft member(sender) - compete for log manager before commit: 53437.56, 237702, 0.22
-         Raft member(sender) - commit log in log manager: 8479.88, 237702, 0.04
-           Raft member(sender) - get logs to be committed: 1227.92, 233785, 0.01
-           Raft member(sender) - delete logs exceeding capacity: 18.70, 243, 0.08
-           Raft member(sender) - append and stable committed logs: 1503.08, 233785, 0.01
-           Raft member(sender) - apply after committing logs: 5013.34, 233785, 0.02
-             Raft member(sender) - provide log to consumer: 3234.72, 237694, 0.01
-             Raft member(sender) - apply logs that cannot run in parallel: 0.00, 0, NaN
-         Raft member(sender) - wait until log is applied: 901602.78, 237702, 3.79
-           Raft member(sender) - put into apply queue for each log: 2448.07, 237694, 0.01
-           Raft member(sender) - take from apply queue for each log: 186008.64, 237694, 0.78
-           Raft member(sender) - in apply queue: 700158.09, 237694, 2.95
-           Raft member(sender) - apply data log: 134613.34, 237694, 0.57
-       Raft member(sender) - log from create to accept: 3453.54, 237702, 0.01
-    Data group member - wait for leader: 0.00, 0, NaN
-    Data group member - forward to leader: 0.00, 0, NaN
-    Log dispatcher - in queue: 0.00, 0, NaN
-    Log dispatcher - from create to end: 0.00, 0, NaN
-  Meta group member - execute in remote group: 0.00, 0, NaN
- Raft member(receiver) - index diff: 0.00, 0, NaN
