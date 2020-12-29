@@ -2,9 +2,9 @@ DB_HOST="server1"
 
 DB_PORT="6667"
 
-CACHE_THRESHOLD="5000"
+CACHE_THRESHOLD="10000"
 
-CLI_PATH="/home/ubuntu/iotdb-cli-0.12.0-SNAPSHOT"
+CLI_PATH="/root/iotdb-cli-0.12.0-SNAPSHOT"
 
 CLI_SHELL="xargs -i sh $CLI_PATH/sbin/start-cli.sh -h $DB_HOST -p $DB_PORT -u root -pw root -e '{}'"
 
