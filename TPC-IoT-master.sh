@@ -143,13 +143,13 @@ clush -w $k -B "mkdir -p $PWD/logs"
 j=$(echo $j+1 | bc)
 done
 
-for i in `seq 1 1 `;
+for i in `seq 1 2 `;
 do
 benchmark_result=1
 # Data Delete
 echo -e "${green}$sep${NC}" | tee -a ./TPCx-IoT-result-"$prefix".log
 echo -e "${green}Deleting Previous Data - Start - `date`${NC}" | tee -a ./TPCx-IoT-result-"$prefix".log
-echo $TRUNCATE_TABLE | $SUT_SHELL
+eval $TRUNCATE_TABLE | $SUT_SHELL
 
 sleep $SLEEP_BETWEEN_RUNS
 echo -e "${green}Deleting Previous Data - End - `date`${NC}" | tee -a ./TPCx-IoT-result-"$prefix".log
@@ -238,7 +238,7 @@ echo "" | tee -a ./TPCx-IoT-result-"$prefix".log
 echo "" | tee -a ./TPCx-IoT-result-"$prefix".log
 echo -e "${green}Starting count of rows in table ${NC}"| tee -a ./TPCx-IoT-result-"$prefix".log
 
-# source ./IoTDataRowCount.sh $i
+source ./IoTDataRowCount.sh $i
 # Get the row count from the database output and compare with the input size
 #num_rows=$(cat logs/IoTValidate-time-run$i.txt | grep $ROW_COUNT | awk -F = '{print $2;}')
 if [ "$num_rows" -lt "$DATABASE_RECORDS_COUNT" ]; then

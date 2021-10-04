@@ -1,1 +1,1 @@
-jps | grep Client | grep -v grep | cut -c 1-5 | xargs kill -9
+jps | grep Client | grep -v grep | cut -c 1-6 | xargs kill -9
