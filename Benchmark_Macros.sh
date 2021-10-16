@@ -10,7 +10,7 @@ CLI_SHELL="xargs -i sh $CLI_PATH/sbin/start-cli.sh -h $DB_HOST -p $DB_PORT -u ro
 
 CHECK_IF_TABLE_EXISTS="Table IoTDB does exist"
 
-TRUNCATE_TABLE="echo 'delete storage group root.*' |  $CLI_SHELL"
+TRUNCATE_TABLE="echo 'delete storage group root.*;clear cache' |  $CLI_SHELL"
 
 CREATE_TABLE="There is no need to create table in IoTDB"
 
