@@ -105,12 +105,15 @@ OPTIONS = {
 
 def usage():
     output = io.BytesIO()
-    print >> output, "%s command database [options]" % sys.argv[0]
+    (print >> output, f"{sys.argv[0]} command database [options]")
 
     print >> output, "\nCommands:"
     for command in sorted(COMMANDS.keys()):
-        print >> output, "    %s %s" % (command.ljust(14),
-                                        COMMANDS[command]["description"])
+        (
+            print >> output,
+            f'    {command.ljust(14)} {COMMANDS[command]["description"]}',
+        )
+
 
     print >> output, "\nDatabases:"
     for db in sorted(DATABASES.keys()):
@@ -119,7 +122,7 @@ def usage():
 
     print >> output, "\nOptions:"
     for option in sorted(OPTIONS.keys()):
-        print >> output, "    %s %s" % (option.ljust(14), OPTIONS[option])
+        (print >> output, f"    {option.ljust(14)} {OPTIONS[option]}")
 
     print >> output, """\nWorkload Files:
     There are various predefined workloads under workloads/ directory.
@@ -154,8 +157,7 @@ def check_output(*popenargs, **kwargs):
         raise ValueError('stdout argument not allowed, it will be overridden.')
     process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
     output, unused_err = process.communicate()
-    retcode = process.poll()
-    if retcode:
+    if retcode := process.poll():
         cmd = kwargs.get("args")
         if cmd is None:
             cmd = popenargs[0]
@@ -176,8 +178,11 @@ def error(message):
 def find_jars(dir, glob='*.jar'):
     jars = []
     for (dirpath, dirnames, filenames) in os.walk(dir):
-        for filename in fnmatch.filter(filenames, glob):
-            jars.append(os.path.join(dirpath, filename))
+        jars.extend(
+            os.path.join(dirpath, filename)
+            for filename in fnmatch.filter(filenames, glob)
+        )
+
     return jars
 
 def get_ycsb_home():
@@ -236,8 +241,7 @@ def main():
 
     # Use JAVA_HOME to find java binary if set, otherwise just use PATH.
     java = "java"
-    java_home = os.getenv("JAVA_HOME")
-    if java_home:
+    if java_home := os.getenv("JAVA_HOME"):
         java = os.path.join(java_home, "bin", "java")
     db_classname = DATABASES[args.database]
     command = COMMANDS[args.command]["command"]
@@ -257,7 +261,7 @@ def main():
              "Couchbase 4.0+ try using the 'couchbase2' client instead.")
 
     if is_distribution():
-        db_dir = os.path.join(ycsb_home, binding + "-binding")
+        db_dir = os.path.join(ycsb_home, f'{binding}-binding')
         # include top-level conf for when we're a binding-specific artifact.
         # If we add top-level conf to the general artifact, starting here
         # will allow binding-specific conf to override (because it's prepended)
@@ -269,13 +273,12 @@ def main():
              "dependencies we'll have to invoke Maven. Depending on the state "
              "of your system, this may take ~30-45 seconds")
         db_location = "core" if binding == "basic" else binding
-        project = "core" if binding == "basic" else binding + "-binding"
+        project = "core" if binding == "basic" else f'{binding}-binding'
         db_dir = os.path.join(ycsb_home, db_location)
         # goes first so we can rely on side-effect of package
         maven_says = get_classpath_from_maven(project)
         # TODO when we have a version property, skip the glob
-        cp = find_jars(os.path.join(db_dir, "target"),
-                       project + "*.jar")
+        cp = find_jars(os.path.join(db_dir, "target"), f'{project}*.jar')
         # alredy in jar:jar:jar form
         cp.append(maven_says)
     cp.insert(0, os.path.join(db_dir, "conf"))
@@ -292,11 +295,10 @@ def main():
     try:
         return subprocess.call(ycsb_command)
     except OSError as e:
-        if e.errno == errno.ENOENT:
-            error('Command failed. Is java installed and on your PATH?')
-            return 1
-        else:
+        if e.errno != errno.ENOENT:
             raise
+        error('Command failed. Is java installed and on your PATH?')
+        return 1
 
 if __name__ == '__main__':
     sys.exit(main())
